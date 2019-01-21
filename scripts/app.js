@@ -15,29 +15,30 @@ const state = {
     draws: 0,
     totalRounds:0,
 
-}
+};
 
 //----Query Selectors
 
-const buttons = document.querySelector('.js-buttons')
-const restart = document.querySelector('.js-restart')
-const wins = document.querySelector('.js-wins')
-const losses = document.querySelector('.js-losses')
-const draws = document.querySelector('.js-draws')
-const playArea = document.querySelector('.js-playArea')
+const buttons = document.querySelector('.js-buttons');
+const restart = document.querySelector('.js-restart');
+const wins = document.querySelector('.js-wins');
+const losses = document.querySelector('.js-losses');
+const draws = document.querySelector('.js-draws');
+const playArea = document.querySelector('.js-playArea');
 
 //----Game Functions
 
 const calcInput = state => {
 
-    const roc = state.playerRoc
-    const pap = state.playerPap
-    const sci = state.playerSci
+    const roc = state.playerRoc;
+    const pap = state.playerPap;
+    const sci = state.playerSci;
 
     const dataSet = [
         {input: 'rock', value: roc}, 
         {input: 'paper', value: pap},
-        {input: 'scissors', value: sci}]
+        {input: 'scissors', value: sci}
+    ];
 
     let maxI = '';
     
@@ -46,21 +47,23 @@ const calcInput = state => {
         let maxV = 0;
 
         if(dataSet[i].value > maxV){
-            maxV = dataSet[i].value
-            maxI = dataSet[i].input
-        }
+            maxV = dataSet[i].value;
+            maxI = dataSet[i].input;
+        };
 
-    }
+    };
 
     const options = ['rock', 'paper', 'scissors'];
     const rChoice = Math.floor(Math.random() * 3);
     const chance = Math.random();
 
-    if(chance > 0.5){
+    if(chance > 0.4){
         state.compInput = options[rChoice];
     }
     else {
-        state.compInput = maxI;
+        if(state.playerInput === maxI && maxI === 'rock') state.compInput = 'paper'
+        else if(state.playerInput === maxI && maxI === 'paper') state.compInput = 'scissors'
+        else if(state.playerInput === maxI && maxI === 'scissors') state.compInput = 'rock'
     }
 
     let cI = state.compInput
@@ -94,7 +97,7 @@ const calcInput = state => {
 buttons.addEventListener('click', e => {
 
     if(e.target.matches('.js-rock')){
-        state.playerInput = 'rock'
+        state.playerInput = 'rock';
         state.playerRoc++
         state.totalRounds++
 
